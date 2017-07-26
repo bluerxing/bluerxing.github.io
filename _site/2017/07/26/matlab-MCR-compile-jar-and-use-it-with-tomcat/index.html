@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Matlab Compiler Runtime与tomcat应用于matlab和java混编及网站开发</title>
+    <meta name="description" content="Matlab Compiler Runtime（MCR）“MATLAB Runtime 是一组独立的共享库，可用于在未安装 MATLAB 的计算机上执行编译后的 MATLAB 应用程序或组件。 MATLAB, MATLAB Compiler与 MATLAB Runtime 配合使用，可以快速、安全地创建和分发数值...">
+
+    <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://at.alicdn.com/t/font_8v3czwksspqlg14i.css">
+    <link rel="stylesheet" href="/css/main.css ">
+    <link rel="canonical" href="http://localhost:4000/2017/07/26/matlab-MCR-compile-jar-and-use-it-with-tomcat/">
+    <link rel="alternate" type="application/rss+xml" title="深蓝" href="http://localhost:4000/feed.xml ">
+
+
+    <script>
+    // 百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?004df33ea25db031f585fdbb0c585ae4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+
+    <script>
+    // google analytics
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-103232278-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    tex2jax: { inlineMath: [["$","$"],["\\(","\\)"]] },
+    "HTML-CSS": {
+      linebreaks: { automatic: true, width: "container" }
+    }
+});
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">深蓝</a>
+        <small>Master of Computer Science at TJU</small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                    <a href="/">
+                    
+                        <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                        <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>Archives
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>Categories
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>Tags
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/collection/">
+                        
+                            <i class="fa fa-bookmark"></i>Collections
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                        <a href="/about/">
+                        
+                            <i class="fa fa-heart"></i>About
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>Matlab Compiler Runtime与tomcat应用于matlab和java混编及网站开发</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2017-07-26
+            </div>
+
+            <div class="label-card">
+                <i class="fa fa-user"></i>bluer
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+            
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#MCR" title="Category: MCR" rel="category">MCR</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+            
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#Matlab" title="Tag: Matlab" rel="tag">Matlab</a-->
+        <a href="/tag/#Matlab" title="Tag: Matlab" rel="tag">Matlab</a>&nbsp;
+    
+        <!--a href="/tag/#MCR" title="Tag: MCR" rel="tag">MCR</a-->
+        <a href="/tag/#MCR" title="Tag: MCR" rel="tag">MCR</a>&nbsp;
+    
+        <!--a href="/tag/#Tomcat" title="Tag: Tomcat" rel="tag">Tomcat</a-->
+        <a href="/tag/#Tomcat" title="Tag: Tomcat" rel="tag">Tomcat</a>&nbsp;
+    
+        <!--a href="/tag/#JavaWeb" title="Tag: JavaWeb" rel="tag">JavaWeb</a-->
+        <a href="/tag/#JavaWeb" title="Tag: JavaWeb" rel="tag">JavaWeb</a>
+    
+  
+
+</span>
+
+            </div>
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+        <ul id="markdown-toc">
+  <li><a href="#1在windows本机上使用library-compile-package编译matlab代码" id="markdown-toc-1在windows本机上使用library-compile-package编译matlab代码">1、在windows本机上使用library compile package编译matlab代码</a></li>
+  <li><a href="#2先在windows平台上配置环境试验是否可以运行jar" id="markdown-toc-2先在windows平台上配置环境试验是否可以运行jar">2、先在windows平台上配置环境试验是否可以运行jar</a></li>
+  <li><a href="#3在linux服务器上配置环境试验是否可以运行jar" id="markdown-toc-3在linux服务器上配置环境试验是否可以运行jar">3、在linux服务器上配置环境试验是否可以运行jar</a></li>
+  <li><a href="#4编写网站配合tomcat上传运行jar" id="markdown-toc-4编写网站配合tomcat上传运行jar">4、编写网站配合tomcat上传运行jar</a></li>
+</ul>
+
+<p>Matlab Compiler Runtime（MCR）<br />
+“MATLAB Runtime 是一组独立的共享库，可用于<strong>在未安装 MATLAB 的计算机上执行编译后的 MATLAB 应用程序或组件</strong>。 MATLAB, MATLAB Compiler与 MATLAB Runtime 配合使用，可以快速、安全地创建和分发数值应用程序或软件组件。”  <br />
+MCR还<strong>可以配合matlab的Library Compile package编译matlab代码为c++、java、python等语言</strong>。  <br />
+所以我们可以把使用library compile package<strong>把matlab程序编译成jar，然后配合tomcat发布javaweb网站。</strong>  <br />
+之前使用matlab程序做网站的做法都是在server上装一个matlab，web的java后台调用系统命令启动matlab，执行matlab脚本，存储结果web在使用java代码调用结果文件。这样做网站响应速度会很慢，而且占web server的很大资源。  <br />
+使用mcr要好很多。</p>
+
+<p>下边我们来动手实践吧（matlab2017a，windows8.1，server：ubuntu14.04）加粗显示的都是趟过的报错坑：</p>
+
+<p>首先我们要明确我们的任务，我们的最终目标是要把依赖第三方工具包（一个深度信念网络包）的matlab程序编译成jar（涉及一个很复杂的第三方包，不知道能不能成），混合到web的java后台代码中。（成的话，我们就算实践了mcr最复杂的用法）    <br />
+所以：</p>
+<ol>
+  <li>在windows本机上使用library compile package编译matlab代码</li>
+  <li>先在windows平台上配置环境试验是否可以运行jar</li>
+  <li>在linux服务器上配置环境试验是否可以运行jar</li>
+  <li>编写网站配合tomcat上传运行jar</li>
+</ol>
+
+<h2 id="1在windows本机上使用library-compile-package编译matlab代码">1、在windows本机上使用library compile package编译matlab代码</h2>
+<p>首先只要使用matlab编译java，都是要配置和matlab相对应的jdk的  <br />
+在Matlabd的Command Windows中输入version -java  <br />
+没错，最新的matlab2017a也是 ‘Java 1.7.0_60-b19 with Oracle Corporation Java HotSpot(TM) 64-Bit Server VM mixed mode’  <br />
+所以装1.8的，可以下载一个1.7zip版，配置环境变量  <br />
+打开cmd 分别输入命令java -version和javac -version分别验证编译和运行版本。  <br />
+<strong>javac没配置好，编译jar包是要报错的。</strong>  <br />
+<strong>jdk版本版本不对是要报错的。</strong>  <br />
+<strong>编译jar时内存不足也是会报错的</strong>：Failed to embed unzip in your applicationUpdate resource failed: 00000000CE555B5，Failed to embed installer splash screen …toolbox\compiler\Resources\default_splash.png. Update resource failed: 0000000037E55CB0  <br />
+编写主函数脚本，这个脚本要做到对外提供一个接口之类的作用，比如我们这个文件是根据用户输入的文件路径，生成深度信念网络跑出来的特征：</p>
+<div class="language-matlab highlighter-rouge"><pre class="highlight"><code>	<span class="k">function</span> <span class="p">[]</span><span class="o">=</span><span class="n">getDbnFeat</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>  
+    <span class="p">[</span><span class="n">tits</span><span class="p">,</span> <span class="n">seqs</span><span class="p">]</span><span class="o">=</span><span class="n">fastaread</span><span class="p">(</span><span class="n">file_path</span><span class="p">);</span>  
+    <span class="n">num</span><span class="o">=</span><span class="nb">length</span><span class="p">(</span><span class="n">tits</span><span class="p">);</span>  
+	<span class="n">len</span><span class="o">=</span><span class="nb">length</span><span class="p">(</span><span class="nb">char</span><span class="p">(</span><span class="n">seqs</span><span class="p">(</span><span class="mi">1</span><span class="p">)));</span>  
+  
+    <span class="n">Y</span><span class="o">=</span><span class="nb">zeros</span><span class="p">(</span><span class="n">num</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>  
+    <span class="n">X</span><span class="o">=</span><span class="nb">zeros</span><span class="p">(</span><span class="n">num</span><span class="p">,</span><span class="n">len</span><span class="o">*</span><span class="mi">4</span><span class="p">);</span>  
+    <span class="c1">%onehot  </span>
+    <span class="k">for</span> <span class="nb">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">num</span>  
+  
+        <span class="n">str</span><span class="o">=</span><span class="nb">char</span><span class="p">(</span><span class="n">tits</span><span class="p">(</span><span class="nb">i</span><span class="p">));</span>  
+        <span class="n">temp</span><span class="o">=</span><span class="nb">strsplit</span><span class="p">(</span><span class="n">str</span><span class="p">,</span><span class="s1">'|'</span><span class="p">);</span>  
+        <span class="n">label</span><span class="o">=</span><span class="nb">char</span><span class="p">(</span><span class="n">temp</span><span class="p">(</span><span class="mi">2</span><span class="p">));</span>  
+        <span class="k">if</span> <span class="n">label</span><span class="o">==</span><span class="s1">'1'</span>  
+            <span class="n">Y</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>  
+        <span class="k">else</span>  
+            <span class="n">Y</span><span class="p">(</span><span class="nb">i</span><span class="p">)</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>  
+        <span class="k">end</span>  
+  
+  
+        <span class="n">img</span><span class="o">=</span><span class="nb">zeros</span><span class="p">(</span><span class="n">len</span><span class="p">,</span><span class="mi">4</span><span class="p">);</span>  
+        <span class="k">for</span> <span class="nb">j</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">len</span>  
+            <span class="n">seq</span><span class="o">=</span><span class="nb">char</span><span class="p">(</span><span class="n">seqs</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">i</span><span class="p">));</span>  
+            <span class="k">switch</span> <span class="n">seq</span><span class="p">(</span><span class="nb">j</span><span class="p">)</span>  
+                <span class="k">case</span> <span class="s1">'A'</span>  
+                    <span class="n">img</span><span class="p">(</span><span class="nb">j</span><span class="p">,:)</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">];</span>  
+                <span class="k">case</span> <span class="s1">'C'</span>  
+                    <span class="n">img</span><span class="p">(</span><span class="nb">j</span><span class="p">,:)</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">];</span>  
+                <span class="k">case</span> <span class="s1">'G'</span>  
+                    <span class="n">img</span><span class="p">(</span><span class="nb">j</span><span class="p">,:)</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">];</span>  
+                <span class="k">case</span> <span class="s1">'U'</span>  
+                    <span class="n">img</span><span class="p">(</span><span class="nb">j</span><span class="p">,:)</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">];</span>  
+                <span class="k">case</span> <span class="s1">'T'</span>  
+                    <span class="n">img</span><span class="p">(</span><span class="nb">j</span><span class="p">,:)</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">];</span>  
+            <span class="k">end</span>  
+        <span class="k">end</span>  
+        <span class="n">X</span><span class="p">(</span><span class="nb">i</span><span class="p">,:)</span><span class="o">=</span><span class="n">img</span><span class="p">(:);</span>  
+  
+    <span class="k">end</span>  
+  
+    <span class="n">inputs</span> <span class="o">=</span> <span class="n">X</span><span class="p">;</span>  
+    <span class="n">targets</span> <span class="o">=</span> <span class="n">Y</span><span class="p">;</span>  
+    <span class="nb">load</span><span class="p">(</span><span class="s1">'dbn.mat'</span><span class="p">);</span>  
+    <span class="n">feat</span><span class="o">=</span><span class="n">dbn</span><span class="o">.</span><span class="n">getFeature</span><span class="p">(</span><span class="n">inputs</span><span class="p">);</span>  
+    <span class="n">feat_label</span><span class="o">=</span><span class="p">[</span><span class="n">feat</span><span class="p">,</span><span class="n">targets</span><span class="p">];</span>  
+    <span class="nb">csvwrite</span><span class="p">(</span><span class="s1">'feat_mid.csv'</span><span class="p">,</span><span class="n">feat_label</span><span class="p">);</span>  
+    <span class="n">S</span> <span class="o">=</span> <span class="nb">fileread</span><span class="p">(</span><span class="s1">'feat_mid.csv'</span><span class="p">);</span>  
+    <span class="n">feat_dim</span><span class="o">=</span><span class="mi">100</span><span class="p">;</span>  
+    <span class="n">attribute</span><span class="o">=</span><span class="s1">''</span><span class="p">;</span>  
+    <span class="k">for</span> <span class="nb">i</span><span class="o">=</span><span class="mi">1</span><span class="p">:</span><span class="n">feat_dim</span>  
+        <span class="n">attribute</span><span class="o">=</span><span class="p">[</span><span class="n">attribute</span><span class="p">,</span><span class="s1">'@attribute Fea'</span><span class="p">,</span><span class="nb">int2str</span><span class="p">(</span><span class="nb">i</span><span class="p">),</span><span class="s1">' numeric'</span><span class="p">,</span><span class="nb">char</span><span class="p">(</span><span class="mi">10</span><span class="p">)];</span>  
+    <span class="k">end</span>  
+    <span class="n">header</span><span class="o">=</span><span class="p">[</span><span class="s1">'@relation m6a_dbn'</span><span class="p">,</span><span class="nb">char</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span><span class="n">attribute</span><span class="p">,</span><span class="s1">'@attribute class {0,1}'</span><span class="p">,</span><span class="nb">char</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span><span class="s1">'@data'</span><span class="p">,</span><span class="nb">char</span><span class="p">(</span><span class="mi">10</span><span class="p">)];</span>  
+  
+    <span class="n">S</span> <span class="o">=</span> <span class="p">[</span><span class="n">header</span><span class="p">,</span>  <span class="n">S</span><span class="p">];</span>  
+    <span class="n">FID</span> <span class="o">=</span> <span class="nb">fopen</span><span class="p">(</span><span class="s1">'feat.arff'</span><span class="p">,</span> <span class="s1">'w'</span><span class="p">);</span>  
+    <span class="k">if</span> <span class="n">FID</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">error</span><span class="p">(</span><span class="s1">'Cannot open file'</span><span class="p">);</span> <span class="k">end</span>  
+    <span class="nb">fwrite</span><span class="p">(</span><span class="n">FID</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="s1">'char'</span><span class="p">);</span>  
+    <span class="nb">fclose</span><span class="p">(</span><span class="n">FID</span><span class="p">);</span>  
+<span class="k">end</span>  
+</code></pre>
+</div>
+<p>LibraryCompiler在matlab的APP一栏下   <br />
+ <img src="http://bbs.malab.cn/data/attachment/forum/201707/19/095650vkh886ak5ah2y462.jpg" alt="" />  <br />
+选择要编译的语言，点击+好选择编写好的主函数脚本，更改生成的jar名  <br />
+<img src="http://bbs.malab.cn/data/attachment/forum/201707/19/095651b88y7bqg1bgezhk7.jpg" alt="" />  <br />
+library compile package会自动选择函数脚本依赖的文件，但是真得会有可能并没有那么智能，特别是我们这种复杂的第三方包。  <br />
+<img src="http://bbs.malab.cn/data/attachment/forum/201707/19/095651p14wioijsjjlfgwl.jpg" alt="" />  <br />
+点击右上角package对号按钮，开始一段漫长的编译。  <br />
+tips：</p>
+<ol>
+  <li>不要涉及mex等平台特定性文件，默认编译的jar文件是平台不相关的，这样部署到linux网站才有可行性，所以不要涉及平台特定性文件。</li>
+  <li>函数内涉及调用mat怎么办，没事，library compile package会智能关联依赖，一并打包。</li>
+  <li>函数外涉及mat调用咋办，就是java调用mat，这个有一个叫<a href="https://sourceforge.net/projects/jmatio/">JMatIO</a>的可以用。</li>
+  <li>涉及二次存储的（比如本例中先使用matlab自带的csvwrite存储成csv文件，再读取csv略改变成arff文件），要注意，library compile package会自动把中间文件打包进jar中，这样会导致程序出错，因为每次调用jar文件，程序都是对jar内部存储中间文件做修改，方法是打包时删点文件夹中的中间文件和结果文件，然后在打开library compile package，这样library compile package就不会自动关联依赖，<strong>不删除直接在依赖列表中删除会报错</strong>。<br />
+点击这个启动library compile package</li>
+  <li><strong>编译成功后，运行报错可能会提示少什么类，在第三方包中找到包含相应类的m文件，添加到依赖文件列标中。</strong><br />
+编译成功后会生成三个文件夹：<br />
+“-for_redistribution包含用于安装应用程序和MATLAB Runtime的文件，可以将这份文件复制到没有安装Matlab的电脑上，安装该文件，在安装过程中会提示要安装独立的共享库MATLAB Runtime，安装之后不需要Matlab也可以运行编译后的Matlab的程序或者元件(The MATLAB Runtime is a standalone set of shared libraries that enables the execution of compiled MATLAB applications or components on computers that do not have MATLAB installed)。<br />
+-for_redistribution_files_only文件夹包含应用程序的重新发布所需的文件。这些文件可以分发到那些有MATLAB或者有 MATLAB Runtime 的用户的电脑上。<br />
+-for_testing文件夹包含创建的所有由MCC创建的文件，像二进制文件和jar，头和源文件，使用这些文件来测试安装。 -PackagingLog.txt是由编译器生成的日志文件。 如果.jar库中的内容不熟悉也可以找到doc下的html文件夹，打开index.html,里面有Javadoc参考资料。” –marine0131<br />
+我们使用for_redistribution_files_only或者for_testing的jar文件进行下一步。</li>
+</ol>
+
+<h2 id="2先在windows平台上配置环境试验是否可以运行jar">2、先在windows平台上配置环境试验是否可以运行jar</h2>
+<p><strong>请配置mcr前一定要把这个官方文档读透，虽然并不能解决很多出错，但是会让你排除很多不对的博客的胡说八道</strong><br />
+https://cn.mathworks.com/help/compiler/install-the-matlab-runtime.html<br />
+https://cn.mathworks.com/help/compiler_sdk/java/configure-your-java-environment.html<br />
+其中有一点值得注意的是，没装matlab的可以装一个800m到1G的mcr installer，装过matlab（10G）的是不用装mcr的，除非你想使用不同版本的matlab运行时。很多帖子因为出错都同时装了matlab和mcr，虽然最后也成功了，但是都是画蛇添足。<br />
+matlab命令行中执行 mcrinstaller 会出现存放mcrinstaller的目录’C:\Program Files\MATLAB\R2017a\toolbox\compiler\deploy\win64\MCRInstaller.exe’我感觉这是让你拷给别人以便对方没有matlab环境能使用你的程序。如果你没有装matlab，应该 去官网直接下载mcr installer。<br />
+确保环境变量中的Path中包含C:\Program Files\MATLAB\R2017a\runtime\win64;C:\Program Files\MATLAB\R2017a\bin，特别是前者\runtime\win64存放了mcr运行需要的dll库。<br />
+确保不同机器上的matlab版本或者mcr版本一致，否则行不通。</p>
+
+<p>在eclipse中新建java项目导入生成的jar包和MATLAB的安装目录或者MATLAB Runtime的安装目录下的toolbox\javabuilder\jar\win64\javabuilder.jar<br />
+编写测试代码：</p>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="kn">package</span> <span class="n">test</span><span class="o">;</span>  
+  
+<span class="kn">import</span> <span class="nn">java.io.FileNotFoundException</span><span class="o">;</span>  
+<span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>  
+<span class="kn">import</span> <span class="nn">com.mathworks.toolbox.javabuilder.MWException</span><span class="o">;</span>  
+<span class="kn">import</span> <span class="nn">getDbnFeat.*</span><span class="o">;</span>  
+  
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">test</span> <span class="o">{</span>  
+  
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">FileNotFoundException</span><span class="o">,</span> <span class="n">IOException</span> <span class="o">{</span>  
+		  
+		<span class="n">DbnFeat</span> <span class="n">matlab</span><span class="o">;</span>  
+		<span class="n">String</span> <span class="n">path</span><span class="o">=</span><span class="n">args</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>  
+		<span class="k">try</span> <span class="o">{</span>  
+			<span class="n">matlab</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DbnFeat</span><span class="o">();</span>  
+			<span class="n">matlab</span><span class="o">.</span><span class="na">getDbnFeat</span><span class="o">(</span><span class="n">path</span><span class="o">);</span>  
+		<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">MWException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>  
+			<span class="c1">// TODO Auto-generated catch block  </span>
+			<span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>  
+		<span class="o">}</span>  
+		  
+	<span class="o">}</span>  
+  
+<span class="o">}</span>  
+</code></pre>
+</div>
+<p>能注意避开以上可能出现的错误，基本就能正常执行。</p>
+
+<h2 id="3在linux服务器上配置环境试验是否可以运行jar">3、在linux服务器上配置环境试验是否可以运行jar</h2>
+<p>由于平台差异性，在server上配置还是有很多差异的。<br />
+我再server上配置了jdk1.7，并把tomcat配置从1.8改为了1.7.<br />
+重装了matlab2017a<br />
+装在server端装matlab有几点：<br />
+1、<strong>server自身存储一般都很小，linux的matlab默认是装在/usr/local下的，装到一般基本会报内存不足，必须装在/mnt外接硬盘上</strong><br />
+要使用配置文件装：<br />
+创建文件夹 ~/matlabSetup <br />
+在其下创建两个文件 installer_input2.txt and activate.ini.</p>
+
+<p>In installer_input2.txt:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>destinationFolder=Path/To/Destination/Folder/  
+fileInstallationKey=xxxxx-xxxxx-xxxxx-xxxxx-xxxxx-xxxxx-xxxxx-xxxxx-xxxxx  
+agreeToLicense=yes  
+outputFile=/tmp/matlab.log  
+mode=silent  
+activationPropertiesFile=~/matlabSetup/activate.ini  
+licensePath=~/matlabSetup/license.lic  
+product.MATLAB  
+</code></pre>
+</div>
+
+<p>product.MATLAB这行是设置只安装matlab主程序，默认全安装可以去掉这行。</p>
+
+<p>In activate.ini:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>isSilent=true  
+activateCommand=activateOffline  
+licenseFile=~/matlabSetup/license.lic  
+</code></pre>
+</div>
+
+<p>license.lic文件为crack文件夹中的license-standlone.lic</p>
+
+<p>ssh中执行：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>cd /media/mathworks  
+sudo ./install  -mode silent -inputFile ~/matlabSetup/installer_input2.txt   
+</code></pre>
+</div>
+
+<p>即可。</p>
+
+<p>配置jdk，确保matlab命令行中输入getenv JAVA_HOME能得到正确的javahome路径。<br />
+ 和windows一样装有matlab就不用装mcr，但是必须让程序找到runtime库，不配置直接运行jar会报这个最普遍出现的错误：<br />
+Failed to find the library libmwmclmcrrt.so.XXXX<br />
+很多人又装了matlab又装了mcr，然后配置了LD_LIBRARY_PATH解决了问题，官方文档也说要配置LD_LIBRARY_PATH，但是啥也没说一笔带过。<br />
+其实缺什么补什么就可以，[b]使用find / -name libmwmclmcrrt 找到这个so链接文件，然后把路径添加到LD_LIBRARY_PATH[/b]，和windows的Path中的runtime\win64是一个作用。<br />
+LD_LIBRARY_PATH不能随便改，这个东西是先与系统默认的库文件加载自定义库文件的，如果先加载了不兼容C库的文件之类的，整个系统都会直接崩掉，并启动不了！（相当于删库跑路，之前有过惨痛教训）<br />
+改了LD_LIBRARY_PATH，ssh上基本就可以运行jar了。</p>
+
+<h2 id="4编写网站配合tomcat上传运行jar">4、编写网站配合tomcat上传运行jar</h2>
+<p>接下来就是利用jar配合java编写web后台，然后部署网站了，<br />
+但是，linux的ssh里能运行不一定tomcat里能运行，<strong>java后台代码里要利用ProcessBuilder的environment 方法再设置一遍LD_LIBRARY_PATH</strong><br />
+否则web还会报Failed to find the library libmwmclmcrrt.so.XXXX的错。</p>
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="n">ProcessBuilder</span> <span class="n">pb</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ProcessBuilder</span><span class="o">(</span><span class="k">new</span> <span class="n">String</span><span class="o">[]</span> <span class="o">{</span> <span class="s">"java"</span><span class="o">,</span> <span class="s">"-classpath"</span><span class="o">,</span> <span class="s">".:./javabuilder.jar:./getDbnFeat.jar"</span><span class="o">,</span><span class="s">"test"</span><span class="o">,</span><span class="s">"in.txt"</span> <span class="o">}).</span><span class="na">directory</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">directory</span><span class="o">));</span>  
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">env</span> <span class="o">=</span> <span class="n">pb</span><span class="o">.</span><span class="na">environment</span><span class="o">();</span>  
+  
+<span class="n">env</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"LD_LIBRARY_PATH"</span><span class="o">,</span> <span class="s">"/mnt/Matlab/runtime/glnxa64"</span><span class="o">);</span>  
+<span class="n">Process</span> <span class="n">process</span><span class="o">=</span><span class="n">pb</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>  
+<span class="n">process</span><span class="o">.</span><span class="na">waitFor</span><span class="o">();</span>  
+</code></pre>
+</div>
+
+<p>最后不知道为啥windows下用eclipse打的调用matlab jar文件和javabuilder.jar生成特征的java代码的jar包，linux上回报错，classpath路径也改成了相对路径，我使用了直接使用linux本地javac编译java执行的方式：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>javac -classpath ./javabuilder.jar:./getDbnFeat.jar  ./test.java  
+java -classpath .:./javabuilder.jar:./getDbnFeat.jar test p1_n1_H.txt   第一行使用javac编译， classpath参数设置依赖（windows用;分割多个依赖包，linux使用:分割多个依赖包）   第二行利用生成的class文件对输入序列编码特征。
+</code></pre>
+</div>
+
+        </article>
+        <hr>
+
+        
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+    </div>
+    <div class="nex">
+
+        
+    </div>
+</div>
+
+
+        <h2 id="comments">Comments</h2>
+        
+
+
+<div id="disqus_thread"></div>
+<script>
+    /**
+     * RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+     * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+     */
+
+    var disqus_config = function() {
+        this.page.url = 'http://localhost:4000/2017/07/26/matlab-MCR-compile-jar-and-use-it-with-tomcat/'; // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://localhost:4000/2017/07/26/matlab-MCR-compile-jar-and-use-it-with-tomcat/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document,
+            s = d.createElement('script');
+
+        s.src = '//bluerxing.disqus.com/embed.js';
+
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    Content
+                </div>
+                <ul id="content-side" class="content-ul">
+                    
+                    <li><a href="#comments">Comments</a></li>
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+
+
+    <div class="wrapper">
+
+        <p class="description">
+             做一个有趣ITer 
+        </p>
+        <p class="contact">
+            Contact me at:  
+            <a href="mailto:bluerxing@163.com" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>  
+            <a href="http://weibo.com/bluerxing" title="Weibo"><i class="fa fa-weibo" aria-hidden="true"></i></a>  
+            <a href="https://www.zhihu.com/people/bluerxing" title="Zhihu"><i class="iconfont icon-daoruzhihu"></i></a>  
+            <a href="https://twitter.com/bluerxing" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>    
+            <a href="https://www.linkedin.com/in/bluerxing" title="LinkedIn"><i class="fa fa-linkedin" aria-hidden="true"></i></a>  
+        </p>
+        <p>
+            本站总访问量<span id="busuanzi_value_site_pv"></span>次，本站访客数<span id="busuanzi_value_site_uv"></span>人次，本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        </p>
+        <p class="power">
+            <span>
+                Site powered by <a href="https://jekyllrb.com/">Jekyll</a> & <a href="https://pages.github.com/">Github Pages</a>.
+            </span>
+            <span>
+                Theme designed by <a href="https://github.com/Gaohaoyang">HyG</a>.
+            </span>
+        </p>
+    </div>
+</footer>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <div class="back-to-top">
+    <a href="#top" data-scroll>
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/smooth-scroll.min.js " charset="utf-8"></script>
+    <script type="text/javascript">
+      smoothScroll.init({
+        speed: 500, // Integer. How fast to complete the scroll in milliseconds
+        easing: 'easeInOutCubic', // Easing pattern to use
+        offset: 20, // Integer. How far to offset the scrolling anchor location in pixels
+      });
+    </script>
+    <!-- <script src=" /js/scroll.min.js " charset="utf-8"></script> -->
+  </body>
+
+</html>

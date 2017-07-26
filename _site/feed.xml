@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>深蓝</title>
+    <description></description>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Wed, 26 Jul 2017 23:16:37 +0800</pubDate>
+    <lastBuildDate>Wed, 26 Jul 2017 23:16:37 +0800</lastBuildDate>
+    <generator>Jekyll v3.4.3</generator>
+    
+      <item>
+        <title>Matlab Compiler Runtime与tomcat应用于matlab和java混编及网站开发</title>
+        <description>
+Matlab Compiler Runtime（MCR）&lt;br /&gt;
+“MATLAB Runtime 是一组独立的共享库，可用于&lt;strong&gt;在未安装 MATLAB 的计算机上执行编译后的 MATLAB 应用程序或组件&lt;/strong&gt;。 MATLAB, MATLAB Compiler与 MATLAB Runtime 配合使用，可以快速、安全地创建和分发数值应用程序或软件组件。”  &lt;br /&gt;
+MCR还&lt;strong&gt;可以配合matlab的Library Compile package编译matlab代码为c++、java、python等语言&lt;/strong&gt;。  &lt;br /&gt;
+所以我们可以把使用library compile package&lt;strong&gt;把matlab程序编译成jar，然后配合tomcat发布javaweb网站。&lt;/strong&gt;  &lt;br /&gt;
+之前使用matlab程序做网站的做法都是在server上装一个matlab，web的java后台调用系统命令启动matlab，执行matlab脚本，存储结果web在使用java代码调用结果文件。这样做网站响应速度会很慢，而且占web server的很大资源。  &lt;br /&gt;
+使用mcr要好很多。
+
+下边我们来动手实践吧（matlab2017a，windows8.1，server：ubuntu14.04）加粗显示的都是趟过的报错坑：
+
+</description>
+        <pubDate>Wed, 26 Jul 2017 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2017/07/26/matlab-MCR-compile-jar-and-use-it-with-tomcat/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/07/26/matlab-MCR-compile-jar-and-use-it-with-tomcat/</guid>
+        
+        <category>Matlab</category>
+        
+        <category>MCR</category>
+        
+        <category>Tomcat</category>
+        
+        <category>JavaWeb</category>
+        
+        
+        <category>MCR</category>
+        
+      </item>
+    
+  </channel>
+</rss>
