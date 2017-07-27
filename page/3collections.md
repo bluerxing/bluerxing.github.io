@@ -29,7 +29,9 @@ type: page
 - [musicforprogramming](http://musicforprogramming.net/)
 
     专为程序员代码编程时听歌的网站，风格感人
-
+- [classeur](https://app.classeur.io)
+    
+    一个markdown笔记，stackedit推广的一个在线笔记，用户社交。
 
 ## 框架&工具包
 
