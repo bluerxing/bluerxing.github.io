@@ -29,10 +29,18 @@ type: page
 - [musicforprogramming](http://musicforprogramming.net/)
 
     专为程序员代码编程时听歌的网站，风格感人
-- [classeur](https://app.classeur.io)
-    
-    一个markdown笔记，stackedit推广的一个在线笔记，用户社交。
 
+### markdown
+- [classeur](https://app.classeur.io)
+
+    国外markdown在线编辑，stackedit推广的一个在线笔记，用户社交。
+- [马克飞象](https://maxiang.io/)    
+
+    国内markdown在线编辑，支持同步evernote，个人喜欢其主题。   
+- [Cmd Markdown](https://www.zybuluo.com/mdeditor) 
+
+    国内markdown在线编辑，功能更多。
+    
 ## 框架&工具包
 
 ### Java
@@ -46,7 +54,7 @@ type: page
 
 - [pandas](http://pandas.pydata.org/)
 
- + [10 Minutes to pandas](http://pandas.pydata.org/pandas-docs/stable/10min.html)
+  - [10 Minutes to pandas](http://pandas.pydata.org/pandas-docs/stable/10min.html)
 
 
 ### Matlab
