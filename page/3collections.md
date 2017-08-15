@@ -11,6 +11,7 @@ type: page
 
 ## 工具
 
+### 在线工具
 - [convertcsv](http://www.convertcsv.com/)
 
     转化 CSV/Excel To JSON,XML,HTML,SQL,Flat File,KML,...
@@ -40,7 +41,12 @@ type: page
 - [Cmd Markdown](https://www.zybuluo.com/mdeditor) 
 
     国内markdown在线编辑，功能更多。
-    
+
+### PC工具
+- [QTraslate](https://quest-app.appspot.com/) 
+
+    自认为最好的机器翻译工具,支持google.cn(设置-高级-google-domain-cn),支持获取浏览器文本,可直接长段直译。
+    
 ## 框架&工具包
 
 ### Java
@@ -71,6 +77,9 @@ type: page
 - [kamihq](https://www.kamihq.com/)
 
     PDF在线编辑
+- [Markdown Here](http://markdown-here.com/)
+
+    邮件一键markdown
 	
 ## Comments
 
