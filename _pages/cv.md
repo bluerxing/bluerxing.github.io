@@ -11,8 +11,6 @@ redirect_from:
 
 # Pengwei Xing
 
-**Email:** pengwei001@e.ntu.edu.sg  
-**Phone:** (+65) 8942-8681  
 **NTU Ph.D. in Singapore**  
 
 ## Education
