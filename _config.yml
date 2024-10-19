@@ -22,7 +22,7 @@ repository               : "bluerxing/bluerxing.github.io"
 author:
   # Biographic information
   avatar           : "profile.png"
-  name             : "Your Sidebar Name"
+  name             : "Pengwei Xing / Penguin"
   pronouns         : # example: "she/her"  
   bio              : "Ph.D student in Nanyang Technological University"
   location         : "Singapore"
@@ -32,7 +32,7 @@ author:
 
   # Academic websites
   arxiv            : # URL - Update with the correct link to your profile
-  googlescholar    : "https://scholar.google.com/citations?user=PS_CX0AAAAAJ"
+  googlescholar    : "https://scholar.google.com.sg/citations?user=uGfjjkcAAAAJ"
   impactstory      : # URL
   orcid            : # "http://orcid.org/yourorcidurl"
   semantic         : # URL
