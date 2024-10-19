@@ -33,14 +33,9 @@ redirect_from:
 
 ## Research Interest
 
-- Neuro-Symbolic AI (Long-term cooperation with IBM)
+- Neuro-Symbolic AI
 - Bilevel Optimization
 - Federated Learning
-
-## Google Scholar
-
-- Citations: 1565  
-- h-index: 10
 
 ## Book Chapters
 
@@ -60,22 +55,6 @@ redirect_from:
   - First to leverage a global structure graph among federated learning client nodes  
   - First one-to-many bilevel optimization technique addressing nested tasks in server and clients  
   - Theoretical analysis of convergence guarantees
-
-- **Gene2vec: Gene Subsequence Embedding for Prediction of Mammalian N6-methyladenosine Sites from mRNA**  
-  - *Top Journal: RNA*, 2019 (independently completed at TJU)  
-  - First to identify equivalence and symmetry of gene sequence using a gene sequence language model  
-  - Recognized with a high citation count of 479
-
-## Under Review
-
-- **MMD-NSL: Mixed Multinomial Distribution-based Neuro-Symbolic Learning** (First Author)  
-  - ICLR 2025 by NTU & IBM  
-  - First to consider transformer as a continuous mixed multinomial distribution  
-  - Build a continuous logic probabilistic learning model for complex categorization context in KG  
-  - Establish a unified theoretical foundation for bijective mapping between different NSL models
-
-
-
 
 Publications
 ======
