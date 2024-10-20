@@ -1,7 +1,7 @@
 ---
 layout: archive
 title: "CV"
-permalink: /cv/
+permalink: /
 author_profile: true
 redirect_from:
   - /resume
@@ -9,9 +9,6 @@ redirect_from:
 
 {% include base_path %}
 
-# Pengwei Xing
-
-**NTU Ph.D. in Singapore**  
 
 ## Education
 
