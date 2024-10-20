@@ -9,9 +9,6 @@ redirect_from:
 
 {% include base_path %}
 
-# Pengwei Xing
-
-**NTU Ph.D. in Singapore**  
 
 ## Education
 
