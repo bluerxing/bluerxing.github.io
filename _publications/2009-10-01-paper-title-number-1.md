@@ -1,14 +1,9 @@
 ---
-title: "Paper Title Number 1"
+title: "Big-fed: Bilevel optimization enhanced graph-aided federated learning"
 collection: publications
-category: manuscripts
-permalink: /publication/2009-10-01-paper-title-number-1
-excerpt: 'This paper is about the number 1. The number 2 is left for future work.'
-date: 2009-10-01
-venue: 'Journal 1'
-slidesurl: 'http://academicpages.github.io/files/slides1.pdf'
-paperurl: 'http://academicpages.github.io/files/paper1.pdf'
-citation: 'Your Name, You. (2009). &quot;Paper Title Number 1.&quot; <i>Journal 1</i>. 1(1).'
+category: IEEE Transactions on Big Data
+permalink: /publication/2022-bigfed-transbigdata
+paperurl: 'https://ieeexplore.ieee.org/abstract/document/9832778'
 ---
 
-The contents above will be part of a list of publications, if the user clicks the link for the publication than the contents of section will be rendered as a full page, allowing you to provide more information about the paper for the reader. When publications are displayed as a single page, the contents of the above "citation" field will automatically be included below this section in a smaller font.
+In federated learning (FL), due to the non-i.i.d. nature of distributedly owned local datasets, personalization is an important design goal. In this paper, we investigate FL scenarios in which data owners are related by a network topology (e.g., traffic prediction based on sensor networks). Existing personalized FL approaches cannot take this information into account. To address this limitation, we propose the Bilevel Optimization enhanced Graph-aided Federated Learning (BiG-Fed) approach. The inner weights enable local tasks to evolve towards personalization, and the outer shared weights on the server side target the non-i.i.d problem enabling individual tasks to evolve towards a global constraint space. To the best of our knowledge, BiG-Fed is the first bilevel optimization technique to enable FL approaches to cope with two nested optimization tasks at the FL server and FL clients simultaneously. Theoretical analysis shows that BiG-Fed is guaranteed to converge in an efficient manner. Extensive experiments on both synthetic and real-world data demonstrate significant superior performance of BiG-Fed over seven state-of-the-art methods.
