@@ -1,6 +1,7 @@
 ---
 title: "Federated Neuro-Symbolic Learning"
 collection: publications
+category: conferences
 permalink: /publication/2024-01-01-Federated-Neuro-Symbolic-Learning
 date: 2024-01-01
 venue: 'In the proceedings of Forty-first International Conference on Machine Learning'
