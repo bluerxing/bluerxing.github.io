@@ -8,7 +8,7 @@
 
 # Basic Site Settings
 locale                   : "en-US"
-title                    : "Pengwei Xing / Ph.D. in NTU"
+title                    : "CV"
 title_separator          : "-"
 name                     : &name "Pengwei Xing"
 description              : &description "personal description"
